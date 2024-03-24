@@ -1,21 +1,22 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts/main_layout')
+@section('content')
 
-    <div class="py-12">
-        @auth
-        <a href="{{ route('logout')}}">Logout</a>
-        @endif
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+
+
+<div class="main flex w-full justify-center flex-col items-center">
+    <div class="flex text-[20px] md:text-[50px] lg:text-[100px]">
+        <h1 class="text-primary-blue">CP</h1>
+        <h1 class="text-primary-yellow">Expedition</h1>
     </div>
-</x-app-layout>
+
+    <form class="search-bar" method="GET" action="{{ route('thesis.search') }}">
+        <img src="{{ asset('images/Search.png') }}" alt="" class="">
+        <input type="text" name="search" />
+        <button></button>
+
+    </form>
+</div>
+<img src="{{asset('images/dashboard_background.svg')}}" alt="" class="w-full fixed bottom-0 z-[-1]">
+
+@endsection('content')

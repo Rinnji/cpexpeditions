@@ -16,8 +16,10 @@ export default {
             },
             colors: {
                 "primary-blue": "#142D65",
-                "primary-blue-hober": "#254896",
+                "primary-blue-hover": "#254896",
                 "primary-yellow": "#FAB200",
+                "accent-yellow": "#F1EBD9",
+                "accent-green": "#0DFD3A",
             },
         },
     },

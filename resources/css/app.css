@@ -2,6 +2,127 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    min-height: 100vh;
+}
 .nav {
     @apply bg-blue-500;
+}
+.search-bar {
+    position: relative;
+}
+.search-bar img {
+    width: 500px;
+    height: 100px;
+}
+
+.search-bar input {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    width: 330px;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+.search-bar input:focus {
+    outline: none;
+    border: none;
+}
+.search-bar button {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    border: none;
+    width: 70px;
+    height: 65px;
+}
+.nav-dropdown-show {
+    transform: translateY(0);
+    opacity: 1;
+    height: auto;
+}
+
+@media screen and (max-width: 1024px) {
+    .search-bar {
+        position: relative;
+    }
+    .search-bar img {
+        width: 400px;
+        height: 75px;
+    }
+
+    .search-bar input {
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        width: 250px;
+        background: transparent;
+        border: none;
+        outline: none;
+    }
+    .search-bar input:focus {
+        outline: none;
+        border: none;
+    }
+    .search-bar button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+
+        border: none;
+        width: 70px;
+        height: 50px;
+    }
+}
+input {
+    outline: none !important;
+}
+input:focus {
+    border: none !important;
+    border-color: black !important;
+    outline: none !important;
+}
+
+@media screen and (max-width: 768px) {
+    .search-bar {
+        position: relative;
+    }
+    .search-bar img {
+        width: 350px;
+        height: 50px;
+    }
+
+    .search-bar input {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 225px;
+        padding: 0 5px;
+        background: transparent;
+        border: none;
+    }
+    .search-bar input:focus {
+        outline: none;
+        border: none;
+    }
+    .search-bar button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border: none;
+        width: 45px;
+        height: 30px;
+    }
+}
+
+.aside-link {
+    @apply p-2 hover:bg-primary-blue-hover cursor-pointer flex gap-4 items-center;
+}
+
+#main-drawer {
+    @apply fixed left-[-300px] top-0 shadow-sm bg-primary-blue flex flex-col h-screen text-[30px] text-white ease-in-out duration-500 rounded-r-xl;
+}
+.main-drawer-show {
+    left: 0 !important;
 }

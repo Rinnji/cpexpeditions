@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -45,5 +46,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function is_admin(): bool
+    {
+        return $this->is_admin == 1;
+    }
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Thesis::class, 'favorites', 'user_id', 'thesis_id');
+    }
+    public function get_fullname(): string
+    {
+        return ucfirst($this->first_name) . ' ' . ucfirst($this->middle_name) . ' ' . ucfirst($this->last_name);
     }
 }
