@@ -19,7 +19,7 @@
     <h1 class="text-5xl font-bold text-primary-blue">
       {{ $thesis->title }}
     </h1>
-    <div class="flex justify-center">
+    <div class="flex ">
       @foreach($thesis->authors as $author)
 
       <p class="  text-2xl">{{ strtoupper($author->first_name[0]) . '.' . strtoupper($author->middle_name[0]) . '.' .  ucfirst($author->last_name ) }}</p>
@@ -30,9 +30,9 @@
     </div>
 
     <div class="flex flex-col">
-      <p class="text-xl text-center">{{ date("F j, Y", strtotime($thesis->date_published)) }}</p>
-      <p class="text-xl text-center">{{ Date("Y", strtotime($thesis->start_schoolyear)) ."-".  Date("Y", strtotime($thesis->end_schoolyear))}}</p>
-      <p class="text-xl text-center">{{ "Adviser: " . $thesis->adviser }}</p>
+      <p class="text-xl">{{ date("F j, Y", strtotime($thesis->date_published)) }}</p>
+      <p class="text-xl">{{ Date("Y", strtotime($thesis->start_schoolyear)) ."-".  Date("Y", strtotime($thesis->end_schoolyear))}}</p>
+      <p class="text-xl">{{ "Adviser: " . $thesis->adviser }}</p>
     </div>
     <div class="">
       <h2 class="font-bold text-4xl">Abstract</h2>
