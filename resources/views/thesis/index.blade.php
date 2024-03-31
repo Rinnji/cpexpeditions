@@ -1,7 +1,7 @@
 @extends('thesis.layout')
 @section('content')
 
-<div class="ml-48 h-full  flex justify-center  flex-col">
+<div class="ml-10 h-full  flex justify-center  flex-col">
 
   @foreach ($theses as $thesis)
   <div class="flex flex-col w-full">
@@ -11,8 +11,7 @@
     <div class="flex gap-1">
 
       @foreach($thesis->authors as $author)
-
-      <p class="text-accent-green  text-[20px]">{{ $author->first_name[0] . '.' . $author->middle_name[0] . '.' . $author->last_name }}</p>
+      <p class="text-accent-green  text-[20px]">{{ strtoupper($author->first_name[0]) . '.' . strtoupper($author->middle_name[0]) . '.' .  ucfirst($author->last_name ) }}</p>
       @if(!$loop->last)
       <p class="text-accent-green  text-[20px]">,</p>
       @endif

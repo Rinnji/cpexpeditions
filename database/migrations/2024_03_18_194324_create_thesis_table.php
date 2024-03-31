@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('abstract');
-            $table->text('body');
+            $table->text('summary_of_findings');
+            $table->text('conclusion');
+            $table->text('recommendations');
+            $table->date('start_schoolyear');
+            $table->date('end_schoolyear');
+            $table->string('adviser');
             $table->date('date_published');
             $table->timestamps();
         });

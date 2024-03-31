@@ -1,10 +1,10 @@
 @extends('thesis.layout')
 @section('content')
-<div class="flex flex-col">
-  <h1 class="text-lg">
+<div class="flex flex-col justify-center items-center">
+  <h1 class="text-4xl text-center mt-5 mb-10 text-primary-blue font-extrabold">
     Favorites
   </h1>
-  <div class="grid grid-cols-1 gap-4">
+  <div class="grid grid-cols-1 gap-4 lg:w-[80%]">
     @foreach($favorites as $favorite)
     <div class="bg-white p-4 rounded border-2 shadow-lg">
       <a href="{{ route('thesis.show', $favorite) }}" class=" text-2xl font-bold text-primary-blue">

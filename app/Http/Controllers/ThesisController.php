@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Author;
 use App\Models\Thesis;
 use Illuminate\Http\Request;
-
+use DateTime;
 use function Laravel\Prompts\error;
 
 class ThesisController extends Controller
@@ -24,11 +24,16 @@ class ThesisController extends Controller
     }
     public function store(Request $request)
     {
-        error_log(json_encode($request->all()));
+
         $request->validate([
             'title' => 'required',
             'abstract' => 'required',
-            'body' => 'required',
+            'summary_of_findings' => 'required',
+            'conclusion' => 'required',
+            'recommendations' => 'required',
+            'start_school_year' => 'required',
+            'end_school_year' => 'required',
+            'adviser' => 'required',
             'date_published' => 'required',
             'first_name' => 'required|array|min:1', // Ensure at least one first name
             'first_name.*' => 'required|string', // Validate each first name
@@ -53,23 +58,41 @@ class ThesisController extends Controller
 
             $authors[] = $author->id;
         }
-        error_log(json_encode($authors));
 
-        $thesis = new Thesis();
-        $thesis->title = $request->input('title');
-        $thesis->abstract = $request->input('abstract');
-        $thesis->body = $request->input('body');
-        $thesis->date_published = $request->input('date_published');
-        $thesis->save();
-        $thesis->authors()->attach($authors);
-        return redirect('thesis');
+        error_log("test");
+        try {
+
+            $thesis = new Thesis();
+            $thesis->title = $request->input('title');
+            $thesis->abstract = $request->input('abstract');
+            $thesis->summary_of_findings = $request->input('summary_of_findings');
+            $thesis->conclusion = $request->input('conclusion');
+            $thesis->recommendations = $request->input('recommendations');
+            $thesis->start_schoolyear = DateTime::createFromFormat('Y', $request->input('start_school_year'));
+            $thesis->end_schoolyear =  DateTime::createFromFormat('Y', $request->input('end_school_year'));
+            $thesis->adviser = $request->input('adviser');
+            $thesis->date_published = $request->input('date_published');
+            $thesis->save();
+            $thesis->authors()->attach($authors);
+
+            return redirect('thesis');
+        } catch (\Exception $e) {
+
+            return redirect('thesis/create')->withErrors(['error' => 'An error occurred']);
+        }
     }
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $theses = Thesis::where('title', 'like', "%$search%")->orWhere('abstract', 'like', "%$search%")->orWhere('body', 'like', "%$search%")->latest()->paginate(3);
+        $theses = Thesis::where('title', 'like', "%$search%")->orWhere('abstract', 'like', "%$search%")->orWhere('summary_of_findings', 'like', "%$search%")->orWhere('start_schoolyear', 'like', "%$search%")->orWhere('end_schoolyear', 'like', "%$search%")->orWhere('adviser', 'like', "%$search%")->latest()->paginate(3);
 
         return view('thesis.search', compact('theses'));
+    }
+    public function json_search(Request $request)
+    {
+        $search = $request->input('search');
+        $theses = Thesis::where('title', 'like', "%$search%")->orWhere('abstract', 'like', "%$search%")->orWhere('summary_of_findings', 'like', "%$search%")->orWhere('start_schoolyear', 'like', "%$search%")->orWhere('end_schoolyear', 'like', "%$search%")->orWhere('adviser', 'like', "%$search%")->latest()->get(['title', 'id'])->take(5);
+        return response()->json($theses);
     }
     public function show(Request $request, $thesis_id)
     {
@@ -78,5 +101,11 @@ class ThesisController extends Controller
     }
     public function update(Request $request)
     {
+    }
+    public function destroy(Request $request, $id)
+    {
+        $thesis = Thesis::findOrFail($id);
+        $thesis->delete();
+        return redirect('thesis');
     }
 }

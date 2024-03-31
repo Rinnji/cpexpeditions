@@ -14,7 +14,12 @@ class Thesis extends Model
     protected $fillable = [
         'title',
         'abstract',
-        'body',
+        'summary_of_findings',
+        'conclusion',
+        'recommendations',
+        'start_schoolyear',
+        'end_schoolyear',
+        'adviser',
         'date_published'
     ];
 

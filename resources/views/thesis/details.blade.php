@@ -15,33 +15,62 @@
     </div>
     @endif
 
-    <form action="{{ route('favorites.store') }}" method="post" class="fixed bottom-5 right-5">
-      @csrf
-      <input type="number" name="thesis_id" value="{{ $thesis->id }}" hidden>
-      <button type="submit" class="bg-primary-yellow text-white p-2 rounded flex justify-center"><span class="material-symbols-outlined">star</span></button>
-    </form>
+
     <h1 class="text-5xl font-bold text-primary-blue">
       {{ $thesis->title }}
     </h1>
-    <div class="flex">
+    <div class="flex justify-center">
       @foreach($thesis->authors as $author)
 
-      <p class="  text-2xl">{{ $author->first_name[0] . '.' . $author->middle_name[0] . '.' . $author->last_name }}</p>
+      <p class="  text-2xl">{{ strtoupper($author->first_name[0]) . '.' . strtoupper($author->middle_name[0]) . '.' .  ucfirst($author->last_name ) }}</p>
       @if(!$loop->last)
       <p class="  text-4xl">,</p>
       @endif
       @endforeach
     </div>
-    <p class="text-xl"><strong>Date Published: </strong>{{ date("F j, Y", strtotime($thesis->date_published)) }}</p>
+
+    <div class="flex flex-col">
+      <p class="text-xl text-center">{{ date("F j, Y", strtotime($thesis->date_published)) }}</p>
+      <p class="text-xl text-center">{{ Date("Y", strtotime($thesis->start_schoolyear)) ."-".  Date("Y", strtotime($thesis->end_schoolyear))}}</p>
+      <p class="text-xl text-center">{{ "Adviser: " . $thesis->adviser }}</p>
+    </div>
     <div class="">
-      <h2 class="font-bold text-4xl">Abstraction</h2>
+      <h2 class="font-bold text-4xl">Abstract</h2>
+      <br>
       <p class="text-lg text-justify ">{{ $thesis->abstract }}</p>
     </div>
     <div class="">
-      <h2 class="font-bold text-4xl">Body</h2>
-      <p class="text-lg  text-justify ">{{ $thesis->body }}</p>
+      <h2 class="font-bold text-4xl">Summary Of Findings</h2>
+      <br>
+      <p class="text-lg  text-justify ">{{ $thesis->summary_of_findings }}</p>
+    </div>
+    <div class="">
+      <h2 class="font-bold text-4xl">Conclusion</h2>
+      <br>
+      <p class="text-lg  text-justify ">{{ $thesis->conclusion }}</p>
+    </div>
+    <div class="">
+      <h2 class="font-bold text-4xl">Recommendations</h2>
+      <br>
+      <p class="text-lg  text-justify ">{{ $thesis->recommendations}}</p>
     </div>
   </div>
+</div>
+<div class="fixed bottom-5 right-5 flex gap-3">
+
+  <form action="{{ route('favorites.store') }}" method="post" class="">
+    @csrf
+    <input type="number" name="thesis_id" value="{{ $thesis->id }}" hidden>
+    <button type="submit" class="bg-primary-yellow text-white p-2 rounded flex justify-center"><span class="material-symbols-outlined">star</span></button>
+  </form>
+  @if(Auth::user()->is_admin == 1)
+  <form action="{{ route('thesis.destroy', $thesis->id) }}" method="POST" class="">
+    @method("DELETE")
+    @csrf
+    <input type="number" name="thesis_id" value="{{ $thesis->id }}" hidden>
+    <button type="submit" class="bg-red-500 text-white p-2 rounded flex justify-center" title="Delete this thesis"><span class="material-symbols-outlined">delete</span></button>
+  </form>
+  @endif
 </div>
 
 @endsection('content')

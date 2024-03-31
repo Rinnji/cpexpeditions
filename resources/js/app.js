@@ -51,3 +51,29 @@ document.addEventListener("click", function (event) {
         navDropdown.classList.remove("nav-dropdown-show");
     }
 });
+let searchDropdown = document.getElementById("search-dropdown");
+async function searchThesis(id) {
+    const userInput = document.getElementById(id).value;
+    console.log(document.getElementById(id).value);
+    const searchDropdown = document.getElementById("search-dropdown");
+    const searchItemSample = document.getElementById("search-item");
+    const response = await fetch(`/thesis/json_search?search=${userInput}`, {
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+    });
+    searchDropdown.innerHTML = "";
+    const data = await response.json();
+    if (data) {
+        searchDropdown.classList.remove("hidden");
+        data.map((item) => {
+            const searchItem = searchItemSample.cloneNode(true);
+            const a = searchItem.querySelector("a");
+            a.href = `/thesis/${item.id}`;
+            a.textContent = item.title;
+            searchDropdown.appendChild(searchItem);
+        });
+    }
+}
+window.searchThesis = searchThesis;

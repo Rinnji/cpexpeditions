@@ -46,13 +46,23 @@
               <span class="material-symbols-outlined text-primary-yellow border-r-2 border-primary-yellow">
                 search
               </span>
-              <input type="text" name="search" id="" class="bg-transparent outline-none border-none ">
+              <input type="text" name="search" id="search-input" class="bg-transparent outline-none border-none" oninput="searchThesis('search-input')">
+              <ul class="bg-white flex flex-col w-full absolute top-[50px] overflow-clip font-bold shadow shadow-slate-500 hidden" id="search-dropdown">
+                <li id="search-item">
+                  <a href="" class="p-2 text-primary-blue hover:bg-primary-blue-hover hover:text-white flex w-full">
+                    Search
+                  </a>
+                </li>
+              </ul>
             </form>
           </li>
           <li>
-            <button>
-              <img src="{{ asset('images/User_Icon.png') }}" alt="" class="w-[40px]">
+            <button id="nav-dropdown-toggle" onclick="toggleNavDropdown()" class="text-white font-bold p-[10px] rounded-full bg-primary-blue w-[40px] h-[40px] mr-3">
+              <img src="{{ asset('images/User_Icon.png') }}" alt="">
             </button>
+            <div id="nav-dropdown" class="absolute top-[60px] h-0 right-4 overflow-hidden transition-all ease-in-out duration-700 opacity-0">
+              <x-user-dropdown-menu />
+            </div>
           </li>
         </ul>
       </li>

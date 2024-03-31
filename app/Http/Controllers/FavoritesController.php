@@ -29,4 +29,10 @@ class FavoritesController extends Controller
 
         return back()->with('status', 'favorite-exists');
     }
+    public function destroy(Request $request, $id)
+    {
+        $user = auth()->user();
+        $user->favorites->detach($id);
+        return back()->with('status', 'favorite-removed');
+    }
 }

@@ -25,12 +25,22 @@
             </a>
 
         </li>
+        <li>
+            <a href="{{ route('thesis.index') }}" class="aside-link">
+                <span class="material-symbols-outlined text-[40px]">
+                    description
+                </span>
+                <p class="text-[20px]">Theses</p>
+            </a>
+
+        </li>
     </ul>
+
+    @if (Auth::user()->is_admin)
     <a href="{{ route('users.index') }}" class="aside-link">
-        <span class="material-symbols-outlined text-[40px]">settings</span>
+        <span class="material-symbols-outlined text-[40px]">group</span>
         <p class="text-[20px]">Users</p>
     </a>
-    @if (Auth::user()->is_admin)
     <a href="{{route('thesis.create') }}" class="aside-link">
         <span class="material-symbols-outlined text-[40px]">post_add</span>
         <p class="text-[20px]">Add Thesis</p>

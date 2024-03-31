@@ -38,6 +38,7 @@
 
     </div>
 </div>
+<img src="{{ asset("images/Login_Background.png") }}" alt="" class="absolute z-[-1] w-full bottom-[30%] h-[200px]" height="400">
 
 
 @endsection('content')

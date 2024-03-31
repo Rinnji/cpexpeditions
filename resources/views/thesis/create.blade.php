@@ -16,13 +16,22 @@
       <input type="date" class="rounded" name="date_published" required>
     </div>
     <div class="flex flex-col">
-      <h1 class="text-primary-blue font-bold text-[20px] mt-4">Body:</h1>
-      <textarea class="rounded min-h-[400px] text-nowrap overflow-scroll" name="body" required></textarea>
-    </div>
-    <div class="flex flex-col">
       <h1 class="text-primary-blue font-bold text-[20px] mt-4">Abstract</h1>
       <textarea cols="30" rows="10" class="rounded" name="abstract"></textarea>
     </div>
+    <div class="flex flex-col">
+      <h1 class="text-primary-blue font-bold text-[20px] mt-4">Summary of Findings:</h1>
+      <textarea class="rounded min-h-[400px] text-nowrap overflow-scroll" name="summary_of_findings" required></textarea>
+    </div>
+    <div class="flex flex-col">
+      <h1 class="text-primary-blue font-bold text-[20px] mt-4">Conclusion:</h1>
+      <textarea class="rounded min-h-[200px] text-nowrap overflow-scroll" name="conclusion" required></textarea>
+    </div>
+    <div class="flex flex-col">
+      <h1 class="text-primary-blue font-bold text-[20px] mt-4">Recommendations:</h1>
+      <textarea class="rounded min-h-[200px] text-nowrap overflow-scroll" name="recommendations" required></textarea>
+    </div>
+
     <div class="flex text-primary-blue">
       <label for="" class=" font-bold text-[20px]">Authors:</label>
       <button onclick="addAuthor()" type="button">
@@ -39,6 +48,19 @@
       </div>
 
 
+    </div>
+    <div class="flex flex-col">
+      <h1 class="text-primary-blue font-bold text-[20px] mt-4">Adviser:</h1>
+      <input type="text" name="adviser" placeholder="adviser">
+    </div>
+    <div class="flex flex-col">
+      <label for="" class="text-primary-blue font-bold text-[20px] mt-4">School year</label>
+      <div class="flex gap-2 items-center">
+        <input type="number" name="start_school_year" min="1900" max="2099" step="1" value="2024" class="rounded shadow p-1" />
+        <p>-</p>
+        <input type="number" name="end_school_year" min="1900" max="2099" step="1" value="2024" class="rounded shadow p-1" />
+
+      </div>
     </div>
     <button class="p-2 bg-primary-yellow text-white w-40 float-end ml-auto" type="submit">Submit</button>
     @if($errors->any())

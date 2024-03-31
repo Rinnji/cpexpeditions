@@ -9,7 +9,7 @@ use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 Route::get('/dashboard', function () {
@@ -23,12 +23,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     Route::get('thesis/search', [ThesisController::class, 'search'])->name('thesis.search');
     Route::resource('favorites', FavoritesController::class)->only(['index', 'store']);
+    Route::get('thesis/json_search', [ThesisController::class, 'json_search'])->name('thesis.json_search');
 
-    Route::resource('thesis', ThesisController::class);
-    Route::get('thesis.create', 'ThesisController@create')->middleware(AdminMiddleware::class);
-    Route::post('thesis.post', 'ThesisController@post')->middleware(AdminMiddleware::class);
-    Route::patch('thesis.update', 'ThesisController@update')->middleware(AdminMiddleware::class);
-    Route::resource('users', UserController::class)->only(['index'])->middleware(AdminMiddleware::class);
+
+
+    Route::resource('users', UserController::class)->middleware(AdminMiddleware::class);
+    Route::resource('thesis', ThesisController::class)->only(['create', 'post', 'update', 'store', 'destroy'])->middleware(AdminMiddleware::class);
+    Route::resource('thesis', ThesisController::class)->only(['search', 'show', 'index', 'json_search']);
 });
 
 

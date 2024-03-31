@@ -7,16 +7,14 @@
             </button>
         </li>
         <li class="flex">
-            <a href="" class="py-2 px-4 hover:bg-slate-100 ">
-                <span class="material-symbols-outlined text-primary-yellow text-[40px]">
+            <a href="{{ route('favorites.index') }}" class="py-2 px-4 hover:bg-slate-100 text-primary-yellow flex items-center text-[25px] gap-3">
+                <span class="material-symbols-outlined text-[30px]">
                     star
                 </span>
-            </a>
-        </li>
-        <li class="flex">
-            <a href="" class="py-2 px-4 hover:bg-slate-100 text-[20px] font-bold text-primary-yellow flex items-center">
                 My Library
             </a>
+
+
         </li>
 
     </ul>
