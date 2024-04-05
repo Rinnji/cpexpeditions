@@ -30,8 +30,8 @@
     </div>
 
     <div class="flex flex-col">
-      <p class="text-xl">{{ date("F j, Y", strtotime($thesis->date_published)) }}</p>
-      <p class="text-xl">{{ Date("Y", strtotime($thesis->start_schoolyear)) ."-".  Date("Y", strtotime($thesis->end_schoolyear))}}</p>
+      <p class="text-xl">Date Published: {{ date("F j, Y", strtotime($thesis->date_published)) }}</p>
+      <p class="text-xl">School Year: {{ Date("Y", strtotime($thesis->start_schoolyear)) ."-".  Date("Y", strtotime($thesis->end_schoolyear))}}</p>
       <p class="text-xl">{{ "Adviser: " . $thesis->adviser }}</p>
     </div>
     <div class="">
@@ -57,20 +57,26 @@
   </div>
 </div>
 <div class="fixed bottom-5 right-5 flex gap-3">
-
+  <button type="button" class="bg-green-400 text-white p-2 rounded flex justify-center button" onclick="printPage()"><span class="material-symbols-outlined">download</span></button>
   <form action="{{ route('favorites.store') }}" method="post" class="">
     @csrf
     <input type="number" name="thesis_id" value="{{ $thesis->id }}" hidden>
-    <button type="submit" class="bg-primary-yellow text-white p-2 rounded flex justify-center"><span class="material-symbols-outlined">star</span></button>
+    <button type="submit" class="bg-primary-yellow text-white p-2 rounded flex justify-center button"><span class="material-symbols-outlined">star</span></button>
   </form>
   @if(Auth::user()->is_admin == 1)
   <form action="{{ route('thesis.destroy', $thesis->id) }}" method="POST" class="">
     @method("DELETE")
     @csrf
     <input type="number" name="thesis_id" value="{{ $thesis->id }}" hidden>
-    <button type="submit" class="bg-red-500 text-white p-2 rounded flex justify-center" title="Delete this thesis"><span class="material-symbols-outlined">delete</span></button>
+    <button type="submit" class="bg-red-500 text-white p-2 rounded flex justify-center button" title="Delete this thesis"><span class="material-symbols-outlined">delete</span></button>
   </form>
   @endif
 </div>
+<script>
+  function printPage() {
 
+    window.print();
+
+  }
+</script>
 @endsection('content')

@@ -44,7 +44,7 @@
         <input type="text" name="first_name[]" placeholder="First Name">
         <input type="text" name="middle_name[]" placeholder="Middle Name">
         <input type="text" name="last_name[]" placeholder="Last Name">
-        <button type="button" class="shadow bg-red-500 shadow-black rounded h-[30px]"><span class="material-symbols-outlined text-[30px] text-white font-bold">remove</span></button>
+        <button type="button" class="shadow bg-red-500 shadow-black rounded h-[30px] button"><span class="material-symbols-outlined text-[30px] text-white font-bold">remove</span></button>
       </div>
 
 
@@ -62,7 +62,10 @@
 
       </div>
     </div>
-    <button class="p-2 bg-primary-yellow text-white w-40 float-end ml-auto" type="submit">Submit</button>
+    <div class="flex ml-auto gap-3">
+      <button class="p-2 bg-slate-400 text-white w-32 hover:scale-105 rounded" type="reset">Cancel</button>
+      <button class="p-2 bg-primary-yellow text-white w-32 hover:scale-105 rounded" type="submit">Submit</button>
+    </div>
     @if($errors->any())
     <div class="alert alert-danger text-red-500">
       <strong>Whoops</strong> There were some problems with your input. <br> <br>

@@ -6,7 +6,7 @@
   </h1>
   <div class="grid grid-cols-1 gap-4 lg:w-[80%]">
     @foreach($favorites as $favorite)
-    <div class="bg-white p-4 rounded border-2 shadow-lg">
+    <div class="bg-white p-4 rounded border-2 shadow-lg ">
       <a href="{{ route('thesis.show', $favorite) }}" class=" text-2xl font-bold text-primary-blue">
         {{ $favorite->title }}
       </a>

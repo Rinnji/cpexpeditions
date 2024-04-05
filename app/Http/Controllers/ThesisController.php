@@ -15,8 +15,16 @@ class ThesisController extends Controller
     {
         $theses = Thesis::latest()->paginate(10);
 
-        return view('thesis.index', compact('theses'));
+        return view('thesis.index');
     }
+    public function json_pagination(Request $request)
+    {
+        $page = $request->input('page');
+
+        $theses = Thesis::with('authors')->latest()->paginate(10, ['*'], 'page', $page);
+        return response()->json($theses);
+    }
+
     public function create(Request $request)
     {
         error_log(json_encode($request));
@@ -84,14 +92,30 @@ class ThesisController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $theses = Thesis::where('title', 'like', "%$search%")->orWhere('abstract', 'like', "%$search%")->orWhere('summary_of_findings', 'like', "%$search%")->orWhere('start_schoolyear', 'like', "%$search%")->orWhere('end_schoolyear', 'like', "%$search%")->orWhere('adviser', 'like', "%$search%")->latest()->paginate(3);
 
-        return view('thesis.search', compact('theses'));
+        return view('thesis.search', compact("search"));
+    }
+    public function json_searchbar(Request $request)
+    {
+        $search = $request->input('search');
+
+        $theses = Thesis::where('title', 'like', "%$search%")->orWhere('abstract', 'like', "%$search%")->orWhere('summary_of_findings', 'like', "%$search%")->orWhere('start_schoolyear', 'like', "%$search%")->orWhere('end_schoolyear', 'like', "%$search%")->orWhere('adviser', 'like', "%$search%")->latest('date_published')->take(4)->get();
+
+        return response()->json($theses);
     }
     public function json_search(Request $request)
     {
-        $search = $request->input('search');
-        $theses = Thesis::where('title', 'like', "%$search%")->orWhere('abstract', 'like', "%$search%")->orWhere('summary_of_findings', 'like', "%$search%")->orWhere('start_schoolyear', 'like', "%$search%")->orWhere('end_schoolyear', 'like', "%$search%")->orWhere('adviser', 'like', "%$search%")->latest()->get(['title', 'id'])->take(5);
+        $search = $request->input("search");
+        $page = $request->input('page');
+        $theses = Thesis::with('authors')
+            ->where('title', 'like', "%$search%")
+            ->orWhere('abstract', 'like', "%$search%")
+            ->orWhere('summary_of_findings', 'like', "%$search%")
+            ->orWhere('start_schoolyear', 'like', "%$search%")
+            ->orWhere('end_schoolyear', 'like', "%$search%")
+            ->orWhere('adviser', 'like', "%$search%")
+            ->latest()
+            ->paginate(10, ['*'], 'page', $page);
         return response()->json($theses);
     }
     public function show(Request $request, $thesis_id)

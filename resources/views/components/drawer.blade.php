@@ -34,6 +34,15 @@
             </a>
 
         </li>
+        <li>
+            <a href="{{ route('about') }}" class="aside-link">
+                <span class="material-symbols-outlined text-[40px]">
+                    groups
+                </span>
+                <p class="text-[20px]">About us</p>
+            </a>
+
+        </li>
     </ul>
 
     @if (Auth::user()->is_admin)

@@ -5,6 +5,9 @@
 body {
     min-height: 100vh;
 }
+.button:hover {
+    scale: 1.2;
+}
 .nav {
     @apply bg-blue-500;
 }
@@ -41,6 +44,14 @@ body {
     transform: translateY(0);
     opacity: 1;
     height: auto;
+}
+@media print {
+    nav {
+        display: none !important;
+    }
+    button {
+        display: none !important;
+    }
 }
 
 @media screen and (max-width: 1024px) {

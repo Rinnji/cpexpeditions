@@ -52,28 +52,92 @@ document.addEventListener("click", function (event) {
     }
 });
 let searchDropdown = document.getElementById("search-dropdown");
+let timeoutId;
+
+function debounce(func, delay) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(func, delay);
+}
+
 async function searchThesis(id) {
     const userInput = document.getElementById(id).value;
-    console.log(document.getElementById(id).value);
+
     const searchDropdown = document.getElementById("search-dropdown");
     const searchItemSample = document.getElementById("search-item");
-    const response = await fetch(`/thesis/json_search?search=${userInput}`, {
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-        },
-    });
-    searchDropdown.innerHTML = "";
-    const data = await response.json();
-    if (data) {
-        searchDropdown.classList.remove("hidden");
-        data.map((item) => {
-            const searchItem = searchItemSample.cloneNode(true);
-            const a = searchItem.querySelector("a");
-            a.href = `/thesis/${item.id}`;
-            a.textContent = item.title;
-            searchDropdown.appendChild(searchItem);
-        });
-    }
+
+    debounce(async () => {
+        const response = await fetch(
+            `/thesis/json_searchbar?search=${userInput}`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+            }
+        );
+        searchDropdown.innerHTML = "";
+        const data = await response.json();
+        const results = [];
+        if (data) {
+            searchDropdown.classList.remove("hidden");
+            data.map((item) => {
+                const keys = Object.keys(item);
+
+                for (let key of keys) {
+                    if (
+                        typeof item[key] === "string" &&
+                        item[key].includes(userInput)
+                    ) {
+                        const index = item[key].indexOf(userInput);
+                        const strResult = item[key].slice(index);
+
+                        // Splitting the string into parts before and after userInput
+                        const beforeUserInput = item[key].substring(
+                            index - 10 > 0 ? index - 10 : 0,
+                            index
+                        );
+                        const afterUserInput = item[key].substring(
+                            index + userInput.length
+                        );
+
+                        // Creating a span to highlight userInput
+                        const highlightedUserInput =
+                            document.createElement("span");
+                        highlightedUserInput.classList.add("bg-primary-blue");
+                        highlightedUserInput.classList.add("text-white");
+                        highlightedUserInput.textContent = userInput;
+
+                        // Creating a container to hold the highlighted userInput
+                        const resultContainer = document.createElement("p");
+
+                        resultContainer.classList.add(
+                            "overflow-hidden",
+                            "whitespace-nowrap",
+                            "text-clip"
+                        );
+
+                        resultContainer.appendChild(
+                            document.createTextNode(beforeUserInput)
+                        );
+                        resultContainer.appendChild(highlightedUserInput);
+                        resultContainer.appendChild(
+                            document.createTextNode(afterUserInput)
+                        );
+
+                        const searchItem = searchItemSample.cloneNode(true);
+                        searchItem.classList.remove("hidden");
+                        const a = searchItem.querySelector("a");
+                        a.innerHTML = "";
+                        a.href = `/thesis/${item.id}`;
+
+                        // Appending the result container to the searchItem
+                        a.appendChild(resultContainer);
+                        searchDropdown.appendChild(searchItem);
+                    }
+                }
+            });
+        }
+    }, 300); // Adjust the delay as needed (in milliseconds)
 }
+
 window.searchThesis = searchThesis;

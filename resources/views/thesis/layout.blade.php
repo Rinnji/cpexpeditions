@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   <title>Document</title>
 </head>
@@ -48,11 +49,7 @@
               </span>
               <input type="text" name="search" id="search-input" class="bg-transparent outline-none border-none" oninput="searchThesis('search-input')">
               <ul class="bg-white flex flex-col w-full absolute top-[50px] overflow-clip font-bold shadow shadow-slate-500 hidden" id="search-dropdown">
-                <li id="search-item">
-                  <a href="" class="p-2 text-primary-blue hover:bg-primary-blue-hover hover:text-white flex w-full">
-                    Search
-                  </a>
-                </li>
+
               </ul>
             </form>
           </li>
@@ -67,6 +64,11 @@
         </ul>
       </li>
     </ul>
+    <li id="search-item" class="hidden">
+      <a href="" class="p-2 text-primary-blue hover:bg-primary-blue-hover hover:text-white flex w-full">
+        Search
+      </a>
+    </li>
   </nav>
   <x-drawer x-data="{ isAsideOpen: false }" />
   @yield('content')
